@@ -10,6 +10,19 @@ export default function RootLayout() {
 
   useEffect(() => {
     SystemUI.setBackgroundColorAsync('#000000');
+
+    if (typeof window !== 'undefined') {
+      const originalError = console.error;
+      console.error = (...args: any[]) => {
+        const errorMessage = args.join(' ');
+        if (errorMessage.includes('MetaMask') ||
+            errorMessage.includes('ethereum') ||
+            errorMessage.includes('chrome-extension')) {
+          return;
+        }
+        originalError.apply(console, args);
+      };
+    }
   }, []);
 
   return (
