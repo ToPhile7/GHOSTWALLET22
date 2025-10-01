@@ -557,8 +557,8 @@ const styles = StyleSheet.create({
     color: '#39FF66',
     fontWeight: 'bold',
     letterSpacing: 0.5,
-    marginTop: 50,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: -5,
     paddingLeft: 5,
   },
   loadingOverlay: {
