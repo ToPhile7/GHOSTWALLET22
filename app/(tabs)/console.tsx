@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
     backgroundColor: '#000',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 20,
   },
   separatorText: {
