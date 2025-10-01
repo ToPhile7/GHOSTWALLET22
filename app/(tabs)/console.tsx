@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Animated, Dimensions, ActivityIndicator } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useSimulation } from '@/context/SimulationContext';
 import { generateLogEntry } from '@/utils/logGenerator';
 import { Check } from 'lucide-react-native';
@@ -172,7 +173,12 @@ export default function ConsoleScreen() {
   );
 
   return (
-    <View style={styles.backgroundContainer}>
+    <LinearGradient
+      colors={['#000000', '#001a00', '#000000']}
+      style={styles.backgroundGradient}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
       <Animated.View style={[styles.animatedContainer, {
         opacity: fadeAnim,
         transform: [{ translateY: slideAnim }]
@@ -282,16 +288,15 @@ export default function ConsoleScreen() {
           </View>
         </SafeAreaView>
       </Animated.View>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundContainer: {
+  backgroundGradient: {
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#000',
   },
   animatedContainer: {
     flex: 1,
