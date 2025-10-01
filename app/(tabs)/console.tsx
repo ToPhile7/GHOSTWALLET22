@@ -251,12 +251,10 @@ export default function ConsoleScreen() {
             </View>
           </View>
 
-          {/* Separator with Wallet Checked Counter */}
-          <View style={styles.separator}>
-            <Text style={styles.separatorText}>
-              Wallet checked : {displayWalletChecked.toLocaleString()}
-            </Text>
-          </View>
+          {/* Wallet Checked Counter without border */}
+          <Text style={styles.separatorText}>
+            Wallet checked : {displayWalletChecked.toLocaleString()}
+          </Text>
 
           {/* Stats Panel */}
           <View style={styles.statsContainer}>
@@ -362,7 +360,7 @@ const styles = StyleSheet.create({
     borderColor: '#39FF66',
     borderRadius: 10,
     backgroundColor: '#000',
-    marginTop: 20,
+    marginTop: 60,
     padding: 10,
   },
   consolePanel: {
@@ -497,10 +495,13 @@ const styles = StyleSheet.create({
   },
   separatorText: {
     fontFamily: 'monospace',
-    fontSize: 12,
+    fontSize: 14,
     color: '#39FF66',
     fontWeight: 'bold',
     letterSpacing: 0.5,
+    marginTop: 10,
+    marginBottom: 10,
+    paddingLeft: 5,
   },
   loadingOverlay: {
     position: 'absolute',
