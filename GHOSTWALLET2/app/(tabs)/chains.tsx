@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, ImageBackground, Animated, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions } from 'react-native';
 import { router } from 'expo-router';
 import { useSimulation } from '@/context/SimulationContext';
 import CryptoIcon from '@/components/CryptoIcon';
@@ -29,9 +29,6 @@ export default function ChainsScreen() {
 
   const screenWidth = Dimensions.get('window').width;
   const isDesktop = screenWidth > 768;
-  const backgroundSource = isDesktop
-    ? require('../../assets/images/newbackground.png')
-    : require('../../assets/images/newbackground.png');
 
 
   React.useEffect(() => {
@@ -120,11 +117,7 @@ export default function ChainsScreen() {
   };
 
   return (
-    <ImageBackground
-      source={backgroundSource}
-      style={styles.backgroundImage}
-      resizeMode="cover"
-    >
+    <View style={styles.backgroundContainer}>
       <Animated.View style={[styles.animatedContainer, {
         opacity: fadeAnim,
         transform: [{ translateY: slideAnim }]
@@ -175,15 +168,16 @@ export default function ChainsScreen() {
           </View>
         </SafeAreaView>
       </Animated.View>
-    </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
+  backgroundContainer: {
     flex: 1,
     width: '100%',
     height: '100%',
+    backgroundColor: '#000',
   },
   animatedContainer: {
     flex: 1,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 interface CryptoIconProps {
   chainId: string;
@@ -18,41 +18,25 @@ const CryptoIcon: React.FC<CryptoIconProps> = ({ chainId, size = 40 }) => {
       case 'ethereum':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Image 
-              source={require('../assets/images/DfXSzOi.png')}
-              style={[styles.ethereumImage, { width: size * 0.7, height: size * 0.7 }]}
-              resizeMode="contain"
-            />
+            <Text style={[styles.ethereumIcon, { fontSize: size * 0.6 }]}>Ξ</Text>
           </View>
         );
       case 'bsc':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Image 
-              source={require('../assets/images/bnb.png')}
-              style={[styles.cryptoImage, { width: size * 0.7, height: size * 0.7 }]}
-              resizeMode="contain"
-            />
+            <Text style={[styles.bscIcon, { fontSize: size * 0.6 }]}>B</Text>
           </View>
         );
       case 'solana':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Image 
-              source={require('../assets/images/solana.png')}
-              style={[styles.cryptoImage, { width: size * 0.7, height: size * 0.7 }]}
-              resizeMode="contain"
-            />
+            <Text style={[styles.solanaIcon, { fontSize: size * 0.6 }]}>S</Text>
           </View>
         );
       case 'avalanche':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Image 
-              source={require('../assets/images/avalanche.png')}
-              style={[styles.cryptoImage, { width: size * 0.7, height: size * 0.7 }]}
-              resizeMode="contain"
-            />
+            <Text style={[styles.avalancheIcon, { fontSize: size * 0.6 }]}>A</Text>
           </View>
         );
       default:
@@ -87,13 +71,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: undefined,
   },
-  ethereumImage: {
-    tintColor: '#39FF66',
-    shadowColor: '#39FF66',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 5,
-    alignSelf: 'center',
+  ethereumIcon: {
+    color: '#39FF66',
+    fontWeight: 'bold',
+    textShadowColor: '#39FF66',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    textAlign: 'center',
+  },
+  solanaIcon: {
+    color: '#39FF66',
+    fontWeight: 'bold',
+    textShadowColor: '#39FF66',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    textAlign: 'center',
+  },
+  avalancheIcon: {
+    color: '#39FF66',
+    fontWeight: 'bold',
+    textShadowColor: '#39FF66',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
+    textAlign: 'center',
   },
   defaultIcon: {
     color: '#39FF66',

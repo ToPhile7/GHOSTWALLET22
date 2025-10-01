@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Platform, Image, ImageBackground, Animated, Dimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Platform, Animated, Dimensions } from 'react-native';
 import { router } from 'expo-router';
 import { useSimulation } from '@/context/SimulationContext';
 
@@ -12,9 +12,6 @@ export default function LoginScreen() {
 
   const screenWidth = Dimensions.get('window').width;
   const isDesktop = screenWidth > 768;
-  const backgroundSource = isDesktop
-    ? require('../../assets/images/newbackground.png')
-    : require('../../assets/images/newbackground.png');
 
 
   React.useEffect(() => {
@@ -92,32 +89,20 @@ export default function LoginScreen() {
   };
 
   return (
-    <ImageBackground
-      source={backgroundSource}
-      style={styles.backgroundImage}
-      resizeMode="cover"
-    >
+    <View style={styles.backgroundContainer}>
       <Animated.View style={[styles.animatedContainer, { opacity: fadeAnim }]}>
         <SafeAreaView style={styles.container}>
           <View style={styles.content}>
           {/* Logo */}
           <View style={styles.logoContainer}>
             <TouchableOpacity style={styles.skullContainer} onPress={handleSkullClick}>
-              <Image 
-                source={require('../../assets/images/skull.png')}
-                style={styles.skullImage}
-                resizeMode="contain"
-              />
+              <Text style={styles.skullText}>💀</Text>
             </TouchableOpacity>
           </View>
 
           {/* Title */}
           <View style={styles.titleContainer}>
-            <Image
-              source={require('../../assets/images/ghostwallet.png')}
-              style={styles.titleImage}
-              resizeMode="contain"
-            />
+            <Text style={styles.titleText}>GHOST WALLET</Text>
           </View>
 
           {/* Form Section: Username Input and Access Button */}
@@ -147,15 +132,16 @@ export default function LoginScreen() {
           </View>
         </SafeAreaView>
       </Animated.View>
-    </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
+  backgroundContainer: {
     flex: 1,
     width: '100%',
     height: '100%',
+    backgroundColor: '#000',
   },
   animatedContainer: {
     flex: 1,
@@ -177,19 +163,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  skullImage: {
-    width: 150,
-    height: 150,
-    tintColor: '#39FF66',
+  skullText: {
+    fontSize: 120,
+    color: '#39FF66',
+    textShadowColor: '#39FF66',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   titleContainer: {
     alignItems: 'center',
     marginTop: -50,
     justifyContent: 'center',
   },
-  titleImage: {
-    width: 300,
-    height: 80,
+  titleText: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: '#39FF66',
+    textShadowColor: '#39FF66',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 15,
+    letterSpacing: 4,
   },
   // New styles for formSection and usernameLabel
   formSection: {
