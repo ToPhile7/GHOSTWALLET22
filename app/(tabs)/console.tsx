@@ -31,6 +31,7 @@ export default function ConsoleScreen() {
   const [isWithdrawing, setIsWithdrawing] = React.useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = React.useState(false);
   const [withdrawAmount, setWithdrawAmount] = React.useState('');
+  const [displayWalletChecked, setDisplayWalletChecked] = React.useState(0);
 
   const flatListRef = useRef<FlatList>(null);
   const buttonScale = useRef(new Animated.Value(1)).current;
@@ -103,6 +104,38 @@ export default function ConsoleScreen() {
     }
   }, [logs]);
 
+  // Animate wallet checked counter
+  useEffect(() => {
+    let animationFrame: number;
+    let startTime: number | null = null;
+    const duration = 9000; // 9 seconds
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+
+      if (elapsed < duration) {
+        // Rapid increment during first 9 seconds
+        setDisplayWalletChecked(prev => prev + Math.floor(Math.random() * 100) + 50);
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        // After 9 seconds, jump to random number between 1-10 million
+        const finalNumber = Math.floor(Math.random() * 9000000) + 1000000;
+        setDisplayWalletChecked(finalNumber);
+      }
+    };
+
+    if (isRunning) {
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [isRunning]);
+
   const handleStop = () => {
     // Button press animation
     Animated.sequence([
@@ -154,22 +187,31 @@ export default function ConsoleScreen() {
     }, 500);
   };
 
-  const renderLogItem = ({ item, index }: { item: string; index: number }) => (
-    <View key={index} style={styles.logLine}>
-      <Text style={styles.logText} numberOfLines={1} ellipsizeMode="tail">
-        {item.startsWith('WALLET FOUND:') ? (
-          <Text style={[styles.logText, styles.walletFoundText]}>{item}</Text>
-        ) : item.startsWith('Wallet Check:') ? (
-          <>
-            <Text style={[styles.logText, styles.boldText]}>Wallet Check:</Text>
-            <Text style={styles.logText}>{item.substring(13)}</Text>
-          </>
-        ) : (
-          item
-        )}
-      </Text>
-    </View>
-  );
+  const renderLogItem = ({ item, index }: { item: string; index: number }) => {
+    // Check if this is a wallet found log
+    if (item.startsWith('₿ Wallet Found :')) {
+      return (
+        <View key={index} style={styles.walletFoundLine}>
+          <Text style={styles.walletFoundText}>{item}</Text>
+        </View>
+      );
+    }
+
+    return (
+      <View key={index} style={styles.logLine}>
+        <Text style={styles.logText} numberOfLines={1} ellipsizeMode="tail">
+          {item.startsWith('Wallet Check:') ? (
+            <>
+              <Text style={[styles.logText, styles.boldText]}>Wallet Check:</Text>
+              <Text style={styles.logText}>{item.substring(13)}</Text>
+            </>
+          ) : (
+            item
+          )}
+        </Text>
+      </View>
+    );
+  };
 
   return (
     <ImageBackground
@@ -206,6 +248,13 @@ export default function ConsoleScreen() {
                   index,
                 })}
               />
+            </View>
+
+            {/* Separator with Wallet Checked Counter */}
+            <View style={styles.separator}>
+              <Text style={styles.separatorText}>
+                Wallet checked : {displayWalletChecked.toLocaleString()}
+              </Text>
             </View>
           </View>
 
@@ -417,13 +466,38 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: 'bold',
   },
+  walletFoundLine: {
+    marginBottom: 2,
+    backgroundColor: 'rgba(57, 255, 102, 0.1)',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: '#39FF66',
+  },
   walletFoundText: {
+    fontFamily: 'monospace',
     fontWeight: 'bold',
     fontSize: 14,
     color: '#39FF66',
     textShadowColor: '#39FF66',
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 3,
+    textShadowRadius: 8,
+    letterSpacing: 0.5,
+  },
+  separator: {
+    height: 35,
+    borderTopWidth: 2,
+    borderTopColor: '#39FF66',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    backgroundColor: 'rgba(57, 255, 102, 0.05)',
+  },
+  separatorText: {
+    fontFamily: 'monospace',
+    fontSize: 12,
+    color: '#39FF66',
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
   },
   loadingOverlay: {
     position: 'absolute',
