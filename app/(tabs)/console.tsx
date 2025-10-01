@@ -107,13 +107,16 @@ export default function ConsoleScreen() {
     }
   }, [logs]);
 
-  // Animate wallet checked counter (normal increment)
+  // Animate wallet checked counter (57211 per minute)
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
     if (isRunning && !showEditPopup) {
+      // 57211 per minute = 57211/60 per second = 953.52 per second
+      // Update every 50ms = 20 times per second
+      // So increment by 953.52/20 = 47.68 per update
       interval = setInterval(() => {
-        setDisplayWalletChecked(prev => prev + Math.floor(Math.random() * 100) + 50);
+        setDisplayWalletChecked(prev => prev + 48);
       }, 50);
     }
 
