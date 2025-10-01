@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Platform, Animated, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Platform, Animated, Dimensions, ImageBackground, Image } from 'react-native';
 import { router } from 'expo-router';
 import { useSimulation } from '@/context/SimulationContext';
 
@@ -100,13 +100,21 @@ export default function LoginScreen() {
           {/* Logo */}
           <View style={styles.logoContainer}>
             <TouchableOpacity style={styles.skullContainer} onPress={handleSkullClick}>
-              <Text style={styles.skullText}>💀</Text>
+              <Image
+                source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/skull-1.png' }}
+                style={styles.skullImage}
+                resizeMode="contain"
+              />
             </TouchableOpacity>
           </View>
 
           {/* Title */}
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>GHOST WALLET</Text>
+            <Image
+              source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/ghostwallet-1.png' }}
+              style={styles.titleImage}
+              resizeMode="contain"
+            />
           </View>
 
           {/* Form Section: Username Input and Access Button */}
@@ -166,26 +174,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  skullText: {
-    fontSize: 120,
-    color: '#39FF66',
-    textShadowColor: '#39FF66',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
+  skullImage: {
+    width: 120,
+    height: 120,
   },
   titleContainer: {
     alignItems: 'center',
-    marginTop: -50,
+    marginTop: 20,
     justifyContent: 'center',
   },
-  titleText: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#39FF66',
-    textShadowColor: '#39FF66',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 15,
-    letterSpacing: 4,
+  titleImage: {
+    width: 300,
+    height: 60,
   },
   // New styles for formSection and usernameLabel
   formSection: {
