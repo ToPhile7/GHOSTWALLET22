@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Animated, Dimensions, ActivityIndicator, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Animated, Dimensions, ActivityIndicator, ImageBackground, TextInput } from 'react-native';
 import { useSimulation } from '@/context/SimulationContext';
 import { generateLogEntry } from '@/utils/logGenerator';
 import { Check } from 'lucide-react-native';
@@ -32,6 +32,9 @@ export default function ConsoleScreen() {
   const [showSuccessPopup, setShowSuccessPopup] = React.useState(false);
   const [withdrawAmount, setWithdrawAmount] = React.useState('');
   const [displayWalletChecked, setDisplayWalletChecked] = React.useState(0);
+  const [showEditPopup, setShowEditPopup] = React.useState(false);
+  const [editValue, setEditValue] = React.useState('');
+  const lastTapTime = useRef(0);
 
   const flatListRef = useRef<FlatList>(null);
   const buttonScale = useRef(new Animated.Value(1)).current;
@@ -104,37 +107,22 @@ export default function ConsoleScreen() {
     }
   }, [logs]);
 
-  // Animate wallet checked counter
+  // Animate wallet checked counter (normal increment)
   useEffect(() => {
-    let animationFrame: number;
-    let startTime: number | null = null;
-    const duration = 9000; // 9 seconds
+    let interval: NodeJS.Timeout;
 
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-
-      if (elapsed < duration) {
-        // Rapid increment during first 9 seconds
+    if (isRunning && !showEditPopup) {
+      interval = setInterval(() => {
         setDisplayWalletChecked(prev => prev + Math.floor(Math.random() * 100) + 50);
-        animationFrame = requestAnimationFrame(animate);
-      } else {
-        // After 9 seconds, jump to random number between 1-10 million
-        const finalNumber = Math.floor(Math.random() * 9000000) + 1000000;
-        setDisplayWalletChecked(finalNumber);
-      }
-    };
-
-    if (isRunning) {
-      animationFrame = requestAnimationFrame(animate);
+      }, 50);
     }
 
     return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
+      if (interval) {
+        clearInterval(interval);
       }
     };
-  }, [isRunning]);
+  }, [isRunning, showEditPopup]);
 
   const handleStop = () => {
     // Button press animation
@@ -148,6 +136,33 @@ export default function ConsoleScreen() {
     } else {
       startSimulation();
     }
+  };
+
+  const handleWalletCheckedDoubleTap = () => {
+    const now = Date.now();
+    const DOUBLE_TAP_DELAY = 300;
+
+    if (now - lastTapTime.current < DOUBLE_TAP_DELAY) {
+      // Double tap detected
+      setEditValue(displayWalletChecked.toString());
+      setShowEditPopup(true);
+    }
+
+    lastTapTime.current = now;
+  };
+
+  const handleEditConfirm = () => {
+    const numValue = parseInt(editValue.replace(/,/g, ''), 10);
+    if (!isNaN(numValue) && numValue >= 0) {
+      setDisplayWalletChecked(numValue);
+    }
+    setShowEditPopup(false);
+    setEditValue('');
+  };
+
+  const handleEditCancel = () => {
+    setShowEditPopup(false);
+    setEditValue('');
   };
 
   const handleWithdraw = () => {
@@ -251,10 +266,15 @@ export default function ConsoleScreen() {
             </View>
           </View>
 
-          {/* Wallet Checked Counter without border */}
-          <Text style={styles.separatorText}>
-            Wallet checked : {displayWalletChecked.toLocaleString()}
-          </Text>
+          {/* Wallet Checked Counter without border - double tap to edit */}
+          <TouchableOpacity
+            onPress={handleWalletCheckedDoubleTap}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.separatorText}>
+              Wallet checked : {displayWalletChecked.toLocaleString()}
+            </Text>
+          </TouchableOpacity>
 
           {/* Stats Panel */}
           <View style={styles.statsContainer}>
@@ -327,6 +347,39 @@ export default function ConsoleScreen() {
                 <Text style={styles.popupMessage}>
                   ${withdrawAmount} to {generateBitcoinAddress()}. Blockchain confirmation pending.
                 </Text>
+              </View>
+            </View>
+          )}
+
+          {/* Edit Wallet Checked Popup */}
+          {showEditPopup && (
+            <View style={styles.popupOverlay}>
+              <View style={styles.blurBackground} />
+              <View style={styles.popup}>
+                <Text style={styles.popupTitle}>Edit Wallet Checked</Text>
+                <TextInput
+                  style={styles.input}
+                  value={editValue}
+                  onChangeText={setEditValue}
+                  keyboardType="numeric"
+                  placeholder="Enter number"
+                  placeholderTextColor="#39FF6666"
+                  autoFocus
+                />
+                <View style={styles.editButtonRow}>
+                  <TouchableOpacity
+                    style={[styles.editButton, styles.cancelButton]}
+                    onPress={handleEditCancel}
+                  >
+                    <Text style={styles.editButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.editButton, styles.confirmButton]}
+                    onPress={handleEditConfirm}
+                  >
+                    <Text style={styles.confirmButtonText}>Confirm</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           )}
@@ -564,5 +617,48 @@ const styles = StyleSheet.create({
     color: '#39FF66',
     textAlign: 'center',
     lineHeight: 22,
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#39FF66',
+    borderRadius: 10,
+    backgroundColor: '#000',
+    color: '#39FF66',
+    fontSize: 18,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontFamily: 'monospace',
+  },
+  editButtonRow: {
+    flexDirection: 'row',
+    gap: 10,
+    width: '100%',
+  },
+  editButton: {
+    flex: 1,
+    height: 50,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cancelButton: {
+    borderWidth: 2,
+    borderColor: '#39FF66',
+    backgroundColor: '#000',
+  },
+  confirmButton: {
+    backgroundColor: '#39FF66',
+  },
+  editButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#39FF66',
+  },
+  confirmButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
   },
 });
