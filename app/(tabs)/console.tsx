@@ -249,13 +249,13 @@ export default function ConsoleScreen() {
                 })}
               />
             </View>
+          </View>
 
-            {/* Separator with Wallet Checked Counter */}
-            <View style={styles.separator}>
-              <Text style={styles.separatorText}>
-                Wallet checked : {displayWalletChecked.toLocaleString()}
-              </Text>
-            </View>
+          {/* Separator with Wallet Checked Counter */}
+          <View style={styles.separator}>
+            <Text style={styles.separatorText}>
+              Wallet checked : {displayWalletChecked.toLocaleString()}
+            </Text>
           </View>
 
           {/* Stats Panel */}
@@ -486,11 +486,14 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 35,
-    borderTopWidth: 2,
-    borderTopColor: '#39FF66',
+    borderWidth: 2,
+    borderColor: '#39FF66',
+    borderRadius: 10,
     justifyContent: 'center',
     paddingHorizontal: 10,
-    backgroundColor: 'rgba(57, 255, 102, 0.05)',
+    backgroundColor: '#000',
+    marginTop: 20,
+    marginBottom: 20,
   },
   separatorText: {
     fontFamily: 'monospace',
