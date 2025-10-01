@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Animated, Dimensions, ImageBackground } from 'react-native';
 import { router } from 'expo-router';
 import { useSimulation } from '@/context/SimulationContext';
 import CryptoIcon from '@/components/CryptoIcon';
@@ -118,11 +117,10 @@ export default function ChainsScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={['#000000', '#001a00', '#000000']}
-      style={styles.backgroundGradient}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
+    <ImageBackground
+      source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/newbackground.png' }}
+      style={styles.backgroundImage}
+      resizeMode="cover"
     >
       <Animated.View style={[styles.animatedContainer, {
         opacity: fadeAnim,
@@ -174,12 +172,12 @@ export default function ChainsScreen() {
           </View>
         </SafeAreaView>
       </Animated.View>
-    </LinearGradient>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundGradient: {
+  backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',

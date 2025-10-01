@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Animated, Dimensions, ActivityIndicator } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Animated, Dimensions, ActivityIndicator, ImageBackground } from 'react-native';
 import { useSimulation } from '@/context/SimulationContext';
 import { generateLogEntry } from '@/utils/logGenerator';
 import { Check } from 'lucide-react-native';
@@ -173,11 +172,10 @@ export default function ConsoleScreen() {
   );
 
   return (
-    <LinearGradient
-      colors={['#000000', '#001a00', '#000000']}
-      style={styles.backgroundGradient}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
+    <ImageBackground
+      source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/newbackground.png' }}
+      style={styles.backgroundImage}
+      resizeMode="cover"
     >
       <Animated.View style={[styles.animatedContainer, {
         opacity: fadeAnim,
@@ -288,12 +286,12 @@ export default function ConsoleScreen() {
           </View>
         </SafeAreaView>
       </Animated.View>
-    </LinearGradient>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundGradient: {
+  backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',

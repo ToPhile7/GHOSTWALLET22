@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Platform, Animated, Dimensions } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert, Platform, Animated, Dimensions, ImageBackground } from 'react-native';
 import { router } from 'expo-router';
 import { useSimulation } from '@/context/SimulationContext';
 
@@ -90,11 +89,10 @@ export default function LoginScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={['#000000', '#001a00', '#000000']}
-      style={styles.backgroundGradient}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
+    <ImageBackground
+      source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/newbackground.png' }}
+      style={styles.backgroundImage}
+      resizeMode="cover"
     >
       <Animated.View style={[styles.animatedContainer, { opacity: fadeAnim }]}>
         <SafeAreaView style={styles.container}>
@@ -138,12 +136,12 @@ export default function LoginScreen() {
           </View>
         </SafeAreaView>
       </Animated.View>
-    </LinearGradient>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundGradient: {
+  backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
