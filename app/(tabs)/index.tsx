@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 150,
   },
   skullContainer: {
     justifyContent: 'center',
