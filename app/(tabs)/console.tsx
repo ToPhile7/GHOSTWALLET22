@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#000',
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: -20,
   },
   separatorText: {
     fontFamily: 'monospace',
