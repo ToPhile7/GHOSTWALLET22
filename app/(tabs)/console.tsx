@@ -143,7 +143,8 @@ export default function ConsoleScreen() {
     const DOUBLE_TAP_DELAY = 300;
 
     if (now - lastTapTime.current < DOUBLE_TAP_DELAY) {
-      // Double tap detected
+      // Double tap detected - pause simulation
+      stopSimulation();
       setEditValue(displayWalletChecked.toString());
       setShowEditPopup(true);
     }
@@ -158,11 +159,15 @@ export default function ConsoleScreen() {
     }
     setShowEditPopup(false);
     setEditValue('');
+    // Resume simulation
+    startSimulation();
   };
 
   const handleEditCancel = () => {
     setShowEditPopup(false);
     setEditValue('');
+    // Resume simulation
+    startSimulation();
   };
 
   const handleWithdraw = () => {

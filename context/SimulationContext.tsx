@@ -66,56 +66,58 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     };
   }, []);
 
-  const startSimulation = useCallback(() => {
+  const startSimulation = useCallback((isPaused = false) => {
     const screenWidth = Dimensions.get('window').width;
     const isDesktop = screenWidth > 768;
 
     if (isRunningRef.current) return;
-    
+
     setIsRunning(true);
     isRunningRef.current = true;
     setFoundAmount('$0');
 
-    // Generate logs
-    logInterval.current = setInterval(() => {
-      addLog(generateLogEntry(selectedChains, isDesktop));
-    }, 1000 / CONFIG.LOGS_PER_SECOND);
+    if (!isPaused) {
+      // Generate logs
+      logInterval.current = setInterval(() => {
+        addLog(generateLogEntry(selectedChains, isDesktop));
+      }, 1000 / CONFIG.LOGS_PER_SECOND);
 
-    // Increment wallet counter
-    counterInterval.current = setInterval(() => {
-      setWalletChecked(prev => prev + 10);
-    }, 1.5);
+      // Increment wallet counter
+      counterInterval.current = setInterval(() => {
+        setWalletChecked(prev => prev + 10);
+      }, 1.5);
 
-    // Find wallet after 4 seconds and display custom amount
-    walletFoundInterval.current = setInterval(() => {
-      setWalletFounded(prev => prev + 1);
+      // Find wallet after 4 seconds and display custom amount
+      walletFoundInterval.current = setInterval(() => {
+        setWalletFounded(prev => prev + 1);
 
-      let btcAmount = '';
-      if (customAmount) {
-        // Use the exact custom amount as entered by user
-        setFoundAmount(customAmount);
-        // Calculate BTC amount
-        const cleanAmount = customAmount.replace(/[$,]/g, '');
-        const numericAmount = parseFloat(cleanAmount);
-        if (!isNaN(numericAmount) && numericAmount > 0) {
+        let btcAmount = '';
+        if (customAmount) {
+          // Use the exact custom amount as entered by user
+          setFoundAmount(customAmount);
+          // Calculate BTC amount
+          const cleanAmount = customAmount.replace(/[$,]/g, '');
+          const numericAmount = parseFloat(cleanAmount);
+          if (!isNaN(numericAmount) && numericAmount > 0) {
+            btcAmount = (numericAmount / 112803).toFixed(3);
+          }
+        } else {
+          // Generate random amount
+          const numericAmount = Math.random() * (CONFIG.FOUND_MAX - CONFIG.FOUND_MIN) + CONFIG.FOUND_MIN;
+          const dollarAmount = `$${numericAmount.toFixed(2)}`;
+          setFoundAmount(dollarAmount);
           btcAmount = (numericAmount / 112803).toFixed(3);
         }
-      } else {
-        // Generate random amount
-        const numericAmount = Math.random() * (CONFIG.FOUND_MAX - CONFIG.FOUND_MIN) + CONFIG.FOUND_MIN;
-        const dollarAmount = `$${numericAmount.toFixed(2)}`;
-        setFoundAmount(dollarAmount);
-        btcAmount = (numericAmount / 112803).toFixed(3);
-      }
 
-      // Add special wallet found log with BTC amount
-      if (btcAmount) {
-        addLog(`₿ Wallet Found : ${btcAmount} BTC`);
-      }
+        // Add special wallet found log with BTC amount
+        if (btcAmount) {
+          addLog(`₿ Wallet Found : ${btcAmount} BTC`);
+        }
 
-      // Continue simulation even after wallet is found
-      // Don't pause the simulation anymore
-    }, walletFoundTiming);
+        // Continue simulation even after wallet is found
+        // Don't pause the simulation anymore
+      }, walletFoundTiming);
+    }
   }, [selectedChains, addLog, customAmount, bitcoinPrice, walletFoundTiming]);
 
   const stopSimulation = useCallback(() => {
