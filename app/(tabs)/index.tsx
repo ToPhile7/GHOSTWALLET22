@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: -20,
     justifyContent: 'center',
   },
   titleImage: {
