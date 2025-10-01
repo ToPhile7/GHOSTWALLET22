@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 interface CryptoIconProps {
   chainId: string;
@@ -12,31 +12,51 @@ const CryptoIcon: React.FC<CryptoIconProps> = ({ chainId, size = 40 }) => {
       case 'bitcoin':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Text style={[styles.bitcoinIcon, { fontSize: size * 0.7 }]}>₿</Text>
+            <Image
+              source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/Gemini_Generated_Image_onbnbqonbnbqonbn.png' }}
+              style={[styles.cryptoImage, { width: size * 0.8, height: size * 0.8 }]}
+              resizeMode="contain"
+            />
           </View>
         );
       case 'ethereum':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Text style={[styles.ethereumIcon, { fontSize: size * 0.6 }]}>Ξ</Text>
+            <Image
+              source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/DfXSzOi.png' }}
+              style={[styles.cryptoImage, { width: size * 0.8, height: size * 0.8 }]}
+              resizeMode="contain"
+            />
           </View>
         );
       case 'bsc':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Text style={[styles.bscIcon, { fontSize: size * 0.6 }]}>B</Text>
+            <Image
+              source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/bnb.png' }}
+              style={[styles.cryptoImage, { width: size * 0.8, height: size * 0.8 }]}
+              resizeMode="contain"
+            />
           </View>
         );
       case 'solana':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Text style={[styles.solanaIcon, { fontSize: size * 0.6 }]}>S</Text>
+            <Image
+              source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/solana.png' }}
+              style={[styles.cryptoImage, { width: size * 0.8, height: size * 0.8 }]}
+              resizeMode="contain"
+            />
           </View>
         );
       case 'avalanche':
         return (
           <View style={[styles.iconContainer, { width: size, height: size }]}>
-            <Text style={[styles.avalancheIcon, { fontSize: size * 0.6 }]}>A</Text>
+            <Image
+              source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/avalanche.png' }}
+              style={[styles.cryptoImage, { width: size * 0.8, height: size * 0.8 }]}
+              resizeMode="contain"
+            />
           </View>
         );
       default:
@@ -59,8 +79,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(57, 255, 102, 0.1)',
     borderWidth: 1,
     borderColor: '#39FF66',
-    display: 'flex',
-    flexDirection: 'column',
   },
   bitcoinIcon: {
     color: '#39FF66',
@@ -107,11 +125,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
   },
   cryptoImage: {
-    tintColor: '#39FF66',
-    shadowColor: '#39FF66',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 5,
     alignSelf: 'center',
   },
   binanceImage: {
