@@ -45,7 +45,7 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [customAmount, setCustomAmount] = useState<string | null>(null);
   const [balances, setBalances] = useState<{ [key: string]: string }>({});
   const [bitcoinPrice] = useState<number>(112803); // Prix fixe du Bitcoin
-  const [walletFoundTiming] = useState<number>(10000); // Fixed 10 seconds
+  const [walletFoundTiming] = useState<number>(15000); // Fixed 15 seconds
 
   const mountedRef = useRef(true);
   const isRunningRef = useRef(false);
