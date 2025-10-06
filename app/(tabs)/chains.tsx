@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#39FF66',
     borderRadius: 10,
-    marginBottom: 15,
+    marginBottom: 12,
     backgroundColor: '#000',
   },
   chainCardHighlighted: {
@@ -248,14 +248,14 @@ const styles = StyleSheet.create({
   chainContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 15,
+    padding: 12,
   },
   chainInfo: {
     flex: 1,
     marginLeft: 15,
   },
   chainName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#39FF66',
   },
