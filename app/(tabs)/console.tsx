@@ -247,7 +247,16 @@ export default function ConsoleScreen() {
       }]}>
         <SafeAreaView style={styles.container}>
           <View style={styles.content}>
-          
+
+          {/* Logo */}
+          <View style={styles.logoContainer}>
+            <ImageBackground
+              source={{ uri: 'https://theghostwallet.tech/wp-content/uploads/2025/10/ghostwallet-1.png' }}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+
           {/* Console Panel */}
           <View style={styles.consoleContainer}>
             <View style={styles.consolePanel}>
@@ -416,6 +425,16 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 15,
+  },
+  logoContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  logo: {
+    width: 200,
+    height: 60,
   },
   consoleContainer: {
     flex: 1,
