@@ -446,21 +446,6 @@ const styles = StyleSheet.create({
   statsContainer: {
     marginTop: 20,
   },
-  walletFoundedContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  bitcoinLogo: {
-    fontSize: 18,
-    color: '#39FF66',
-    fontWeight: 'bold',
-    marginRight: 8,
-  },
-  walletFoundedText: {
-    fontSize: 16,
-    color: '#39FF66',
-  },
   statsBox: {
     borderWidth: 2,
     borderColor: '#39FF66',
