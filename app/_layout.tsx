@@ -22,6 +22,29 @@ export default function RootLayout() {
         }
         originalError.apply(console, args);
       };
+
+      // Fix iOS PWA keyboard focus issue
+      const setupInputFocus = () => {
+        document.querySelectorAll('input, textarea').forEach((el) => {
+          const inputEl = el as HTMLInputElement | HTMLTextAreaElement;
+
+          inputEl.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            setTimeout(() => inputEl.focus(), 100);
+          });
+
+          inputEl.addEventListener('click', () => {
+            setTimeout(() => inputEl.focus(), 100);
+          });
+        });
+      };
+
+      // Run initially and also after DOM updates
+      setupInputFocus();
+      const observer = new MutationObserver(setupInputFocus);
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      return () => observer.disconnect();
     }
   }, []);
 

@@ -23,7 +23,11 @@
     "web": {
       "bundler": "metro",
       "output": "single",
-      "favicon": "./assets/images/skull.png"
+      "favicon": "./assets/images/skull.png",
+      "meta": {
+        "apple-mobile-web-app-capable": "yes",
+        "apple-mobile-web-app-status-bar-style": "default"
+      }
     },
     "plugins": ["expo-router", "expo-font", "expo-web-browser"],
     "experiments": {

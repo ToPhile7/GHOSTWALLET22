@@ -587,6 +587,7 @@ const styles = StyleSheet.create({
     margin: 20,
     alignItems: 'center',
     maxWidth: 350,
+    zIndex: 1002,
   },
   checkIconContainer: {
     width: 80,
