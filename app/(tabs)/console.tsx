@@ -373,6 +373,7 @@ export default function ConsoleScreen() {
                   placeholder="Enter number"
                   placeholderTextColor="#39FF6666"
                   autoFocus
+                  inputMode="numeric"
                 />
                 <View style={styles.editButtonRow}>
                   <TouchableOpacity
