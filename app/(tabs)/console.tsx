@@ -243,8 +243,7 @@ export default function ConsoleScreen() {
       resizeMode="cover"
     >
       <Animated.View style={[styles.animatedContainer, {
-        opacity: fadeAnim,
-        transform: [{ translateY: slideAnim }]
+        opacity: fadeAnim
       }]}>
         <SafeAreaView style={styles.container}>
           <View style={styles.content}>
@@ -365,16 +364,18 @@ export default function ConsoleScreen() {
               <View style={styles.blurBackground} />
               <View style={styles.popup}>
                 <Text style={styles.popupTitle}>Edit Wallet Checked</Text>
-                <TextInput
-                  style={styles.input}
-                  value={editValue}
-                  onChangeText={setEditValue}
-                  keyboardType="numeric"
-                  placeholder="Enter number"
-                  placeholderTextColor="#39FF6666"
-                  autoFocus
-                  inputMode="numeric"
-                />
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    value={editValue}
+                    onChangeText={setEditValue}
+                    keyboardType="numeric"
+                    placeholder="Enter number"
+                    placeholderTextColor="#39FF6666"
+                    autoFocus
+                    inputMode="numeric"
+                  />
+                </View>
                 <View style={styles.editButtonRow}>
                   <TouchableOpacity
                     style={[styles.editButton, styles.cancelButton]}
@@ -613,6 +614,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
   },
+  inputContainer: {
+    position: 'relative',
+    zIndex: 10,
+    width: '100%',
+    marginBottom: 20,
+  },
   input: {
     width: '100%',
     height: 50,
@@ -623,7 +630,6 @@ const styles = StyleSheet.create({
     color: '#39FF66',
     fontSize: 18,
     paddingHorizontal: 15,
-    marginBottom: 20,
     fontFamily: 'monospace',
   },
   editButtonRow: {

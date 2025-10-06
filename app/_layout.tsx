@@ -30,21 +30,50 @@ export default function RootLayout() {
 
           inputEl.addEventListener('touchend', (e) => {
             e.preventDefault();
-            setTimeout(() => inputEl.focus(), 100);
+            setTimeout(() => {
+              inputEl.focus();
+              inputEl.selectionStart = inputEl.value.length;
+            }, 150);
           });
 
           inputEl.addEventListener('click', () => {
-            setTimeout(() => inputEl.focus(), 100);
+            setTimeout(() => {
+              inputEl.focus();
+              inputEl.selectionStart = inputEl.value.length;
+            }, 150);
           });
         });
       };
+
+      // Handle body styles when keyboard opens/closes
+      const handleFocusIn = () => {
+        document.body.style.position = 'static';
+        document.body.style.overflow = 'visible';
+      };
+
+      const handleFocusOut = () => {
+        document.body.style.position = '';
+        document.body.style.overflow = '';
+      };
+
+      window.addEventListener('focusin', handleFocusIn);
+      window.addEventListener('focusout', handleFocusOut);
+
+      // iOS-specific scroll fix
+      if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        window.addEventListener('focusin', () => window.scrollTo(0, 0));
+      }
 
       // Run initially and also after DOM updates
       setupInputFocus();
       const observer = new MutationObserver(setupInputFocus);
       observer.observe(document.body, { childList: true, subtree: true });
 
-      return () => observer.disconnect();
+      return () => {
+        observer.disconnect();
+        window.removeEventListener('focusin', handleFocusIn);
+        window.removeEventListener('focusout', handleFocusOut);
+      };
     }
   }, []);
 
