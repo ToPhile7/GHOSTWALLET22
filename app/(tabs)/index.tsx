@@ -120,15 +120,15 @@ export default function LoginScreen() {
           {/* Form Section: Username Input and Access Button */}
           <View style={styles.formSection}>
             <Text style={styles.usernameLabel}>Enter your username</Text>
-            <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholderTextColor="#666"
               value={username}
               onChangeText={setUsername}
               onKeyPress={handleKeyPress}
+              autoCapitalize="none"
+              autoCorrect={false}
             />
-          </View>
           <TouchableOpacity style={styles.accessButton} onPress={handleAccess}>
             <Text style={styles.accessButtonText}>Access</Text>
           </TouchableOpacity>
@@ -200,9 +200,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 5, // Small gap between label and input
   },
-  inputContainer: {
-    // marginBottom: 0, // This is already 0, no change needed
-  },
   input: {
     height: 60,
     borderWidth: 2,
@@ -212,6 +209,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 1,
   },
   accessButton: {
     height: 60, // This is already 0, no change needed
