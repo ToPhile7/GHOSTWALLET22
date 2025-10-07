@@ -12,6 +12,29 @@ export default function RootLayout() {
     SystemUI.setBackgroundColorAsync('#000000');
 
     if (typeof window !== 'undefined') {
+      const style = document.createElement('style');
+      style.textContent = `
+        html, body {
+          overflow: hidden !important;
+          height: 100%;
+          margin: 0;
+        }
+        ::-webkit-scrollbar {
+          display: none;
+        }
+        body {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        * {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
+        }
+      `;
+      document.head.appendChild(style);
       const originalError = console.error;
       console.error = (...args: any[]) => {
         const errorMessage = args.join(' ');
