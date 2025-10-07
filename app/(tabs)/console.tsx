@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
     borderColor: '#39FF66',
     borderRadius: 10,
     backgroundColor: '#000',
-    marginTop: 1000,
+    marginTop: 20,
     padding: 10,
   },
   consolePanel: {
