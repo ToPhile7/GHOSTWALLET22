@@ -137,7 +137,7 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       walletFoundInterval.current = null;
     }
 
-    addLog('BRUTE FORCE PAUSED - GHOSTWALLET 2.4');
+    addLog('BRUTEFORCE PAUSED - GHOSTWALLET 2.4');
   }, [addLog]);
 
   const withdraw = useCallback(() => {
