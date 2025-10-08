@@ -7,8 +7,8 @@ import { Check } from 'lucide-react-native';
 function generateBitcoinAddress() {
   // Generate a formatted address like 191r4t...qJu49
   const chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-  let start = '1A8z9X';
-  let end = '7mN4wV';
+  let start = '191r4t';
+  let end = 'jqJu49';
   return `${start}...${end}`;
 }
 
