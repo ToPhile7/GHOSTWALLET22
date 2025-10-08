@@ -5,7 +5,7 @@ import { generateLogEntry } from '@/utils/logGenerator';
 import { Check } from 'lucide-react-native';
 
 function generateBitcoinAddress() {
-  // Generate a formatted address like 1A8z9X...7mN4wV
+  // Generate a formatted address like 191r4t...qJu49
   const chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
   let start = '1A8z9X';
   let end = '7mN4wV';
